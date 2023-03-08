@@ -1,5 +1,5 @@
-import React, { useContext, useState } from "react";
-import { ClickMe } from "../../context/clickme";
+import {  React, useContext, useState } from "react";
+import "./register.css"
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -10,62 +10,40 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { UserContext } from "../context/registerContext";
+import Header from "../component/Header/Header";
 export default function Register() {
-  const { state, dispatch } = useContext(ClickMe);
+
   const [User, setUser] = useState({
     username: "",
     password: "",
-    fullname: "",
-    admin: true,
   });
 
-  const haddleadd = (e) => {
-    e.preventDefault();
-    const number = state.add + 1;
-    dispatch({ type: "click", payload: { name: User.username, add: number } });
-  };
-  const toggleAdmin =(e)=>{
-    setUser({ ...User, admin: !User.admin });
-  }
+  //const {Users,dispatch} =useContext(UserContext);
+
   const haddleUser = (e) => {
     setUser({ ...User, [e.target.id]: e.target.value });
   };
   const navigate = useNavigate();
   const clickRegister = async (e) => {
     e.preventDefault();
-    try {
-      console.log(User);
-      const res = await axios.post("/register", User);
-      console.log(res.data);
-      if (res.data.status === "error") {
-        alert("Username Already Used");
-      }
-      if (res.data.status === "ok") {
+    //dispatch({type:"Register" , payload:[...Users ,User]})
         navigate("/login");
-      }
-    } catch (error) {
-      alert("Format not correct")
-    
-    }
+      
   };
   
   return (
     <div className="lcon">
-      <InputLabel>Register</InputLabel>
-      <Box
-        component="main"
-        sx={{
-          alignItems: "center",
-          display: "flex",
-          flexGrow: 1,
-          minHeight: "100%",
-        }}
-      >
+      <Header/>
+    
+     
+      <div className="lcontainner">
+        <img src="./profile.png" className="imgproflie" />
         <Container maxWidth="sm">
           <form onSubmit={clickRegister}>
             <Box sx={{ my: 3 }}>
               <Typography color="textPrimary" variant="h4">
-                Sign in
+                Sign up
               </Typography>
             </Box>
             <Box
@@ -94,25 +72,6 @@ export default function Register() {
               placeholder="password"
               required
             />
-            <TextField
-              fullWidth
-              margin="normal"
-              type="text"
-              name=""
-              id="fullname"
-              onChange={haddleUser}
-              placeholder="fullname"
-              required
-            />
-            {User.admin ? (
-              <Button variant="contained" color="success" onClick={toggleAdmin}>
-                Admin
-              </Button>
-            ) : (
-              <Button variant="outlined" color="error" onClick={toggleAdmin}>
-                Not Admin
-              </Button>
-            )}
             <Box sx={{ py: 2 }}>
               <Button
                 color="primary"
@@ -140,7 +99,8 @@ export default function Register() {
             </Typography>
           </form>
         </Container>
-      </Box>
+        </div>
+ 
     </div>
   );
 }

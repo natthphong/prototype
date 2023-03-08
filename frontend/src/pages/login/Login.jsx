@@ -1,23 +1,21 @@
-import React, { useContext, useState } from "react";
+import React, {  useContext, useState } from "react";
 import "./login.css";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import { ClickMe } from "../../context/clickme";
-import { getCookie } from "../../getCookie/getCookie";
+
+
 import { Box, Button, Container, InputLabel, TextField, Typography } from "@mui/material";
+import { UserContext } from "../context/registerContext";
+import Header from "../component/Header/Header";
 export default function Login() {
-  const { state, dispatch } = useContext(ClickMe);
   const [User, setUser] = useState({
     username: "",
     password: "",
   });
 
-  const haddleadd = (e) => {
-    e.preventDefault();
-    const number = state.add + 1;
-    dispatch({ type: "click", payload: { name: User.username, add: number } });
-    console.log(state.add);
-  };
+  //const {Users,dispatch} =useContext(UserContext);
+  //console.log(Users);
+
 
   const haddleUser = (e) => {
     setUser({ ...User, [e.target.id]: e.target.value });
@@ -25,33 +23,27 @@ export default function Login() {
   const navigate = useNavigate();
   const clickRegister = async (e) => {
     e.preventDefault();
-    try {
-      const res = await axios.post("/login", User);
-      navigate("/home");
-    } catch (error) {
-      alert("Format not correct")
-    }
+  
+      if(User.username ==="test123" && User.password ==="123456"){
+        navigate("/home");
+      }else{
+          alert("error");
+      }
+    
+   
   };
 
   return (
     <div className="lcon">
-      <InputLabel>
-        Login
-      </InputLabel>
-      <Box
-        component="main"
-        sx={{
-          alignItems: "center",
-          display: "flex",
-          flexGrow: 1,
-          minHeight: "100%",
-        }}
-      >
+          <Header/>   
+<div className="lcontainner">
+
+        <img src="./profile.png" className="imgproflie" />
         <Container maxWidth="sm">
           <form onSubmit={clickRegister}>
             <Box sx={{ my: 3 }}>
               <Typography color="textPrimary" variant="h4">
-                Sign in
+              Login
               </Typography>
             </Box>
             <Box
@@ -107,7 +99,7 @@ export default function Login() {
             </Typography>
           </form>
         </Container>
-      </Box>
+        </div>
     </div>
   );
 }

@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import { ClickMeProvider } from './context/clickme';
+import { UserContextProvider } from './pages/context/registerContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <ClickMeProvider>
+    <UserContextProvider>
       <App />
-    </ClickMeProvider>
+    </UserContextProvider>
     
   </React.StrictMode>
 );
