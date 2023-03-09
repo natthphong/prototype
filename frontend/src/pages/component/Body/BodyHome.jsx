@@ -1,43 +1,38 @@
 import { React, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import "./bdhome.css";
 import ClearIcon from "@mui/icons-material/Clear";
 import { useNavigate } from "react-router-dom";
 export default function BodyHome() {
   const [openform, setOpenform] = useState(false);
   const [confirm, setconfirm] = useState(false);
-  const [formUser, setFormUser] = useState({
-    name: "",
-    lastname: "",
-    dateBirth: "",
-    weight: "",
-    height: "",
-    frequency: 0,
-    disease: "",
-    pertime: 0,
-    equipment: "",
-    reduced: 0,
-    dateStart: "",
-    dateEnd: "",
-    sport: [],
-  });
+ 
 
   const navigator = useNavigate();
 
   const next = (e) => {
     e.preventDefault();
-
-    if(confirm){
-      navigator("/result");
-    }else{
-      alert("ยังไม่ยินยอมเปิดเผยข้อมูล")
+    
+    if (confirm) {
+      toast("รอผลวิเคราะห์รอสักครู่!", {
+        icon: "👏",
+        style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: "#fff",
+        },
+      });
+      setTimeout(function () {
+        navigator("/result");
+      }, 1200);
+    } else {
+      alert("ยังไม่ยินยอมเปิดเผยข้อมูล");
     }
-
-
-
   };
 
   return (
     <div className="containerBody">
+      <Toaster position="top-center" reverseOrder={false} />
       {openform && (
         <div className="stateform">
           <div className="iconsetting">
@@ -74,6 +69,7 @@ export default function BodyHome() {
                   type="date"
                   name=""
                   id=""
+                  required
                   placeholder="วัน/เดือน/ปีเกิด"
                 />
               </div>
@@ -126,16 +122,16 @@ export default function BodyHome() {
               </div>
               <div className="row">
                 <input
-                 required
+                  required
                   type="text"
                   name=""
                   id=""
                   placeholder="น้ำหนักที่ต้องการลด"
                 />
                 <label htmlFor="">วันที่เริ่มออก</label>
-                <input type="date" name="" id="" />
+                <input required type="date" name="" id="" />
                 <label htmlFor="">วันที่จะหยุด</label>
-                <input type="date" name="" id="" />
+                <input required type="date" name="" id="" />
               </div>
               <div className="sport">
                 <label htmlFor="">ประเภทการออกกำลังกายที่ไม่ชอบ</label>
@@ -164,11 +160,20 @@ export default function BodyHome() {
 
               <div className="setbtn">
                 <div className="row">
-                  <input type="checkbox" name="" onChange={(e)=>{setconfirm(!confirm)}} />
+                  <input
+                    type="checkbox"
+                    name=""
+                    onChange={(e) => {
+                      setconfirm(!confirm);
+                    }}
+                  />
                   <label htmlFor="">ข้าพเจ้ายินยอมเปิดเผยข้อมูล</label>
                 </div>
-                <input type="submit" className="btnok2" value="เริ่มวิเคราะห์" />
-             
+                <input
+                  type="submit"
+                  className="btnok2"
+                  value="เริ่มวิเคราะห์"
+                />
               </div>
             </form>
           </div>

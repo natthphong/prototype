@@ -126,3 +126,7 @@ h1,h2,h3,div,p{
     flex-direction: column;
     align-items: center;
 }
+
+.hegi7{
+    max-height: 750px;
+}

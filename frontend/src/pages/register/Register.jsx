@@ -1,19 +1,11 @@
-import {  React, useContext, useState } from "react";
-import "./register.css"
-import axios from "axios";
+import { React, useState } from "react";
+import "./register.css";
+import toast, { Toaster } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  Box,
-  Button,
-  Container,
-  InputLabel,
-  TextField,
-  Typography,
-} from "@mui/material";
-import { UserContext } from "../context/registerContext";
+import { Box, Button, Container, TextField, Typography } from "@mui/material";
+
 import Header from "../component/Header/Header";
 export default function Register() {
-
   const [User, setUser] = useState({
     username: "",
     password: "",
@@ -27,18 +19,19 @@ export default function Register() {
   const navigate = useNavigate();
   const clickRegister = async (e) => {
     e.preventDefault();
-    //dispatch({type:"Register" , payload:[...Users ,User]})
-        navigate("/login");
-      
+    toast.success("Register Success!");
+    setTimeout(function () {
+      navigate("/login");
+    }, 1500);
   };
-  
+
   return (
     <div className="lcon">
-      <Header/>
-    
-     
+      <Toaster  position="top-center" reverseOrder={false} />
+      <Header rl={"rl"} />
+
       <div className="lcontainner">
-        <img src="./profile.png" className="imgproflie" />
+        <img src="./profile.png" className="imgproflie" alt="" />
         <Container maxWidth="sm">
           <form onSubmit={clickRegister}>
             <Box sx={{ my: 3 }}>
@@ -79,7 +72,6 @@ export default function Register() {
                 size="large"
                 type="submit"
                 variant="contained"
-                onClick={clickRegister}
               >
                 Sign Up Now
               </Button>
@@ -99,8 +91,7 @@ export default function Register() {
             </Typography>
           </form>
         </Container>
-        </div>
- 
+      </div>
     </div>
   );
 }

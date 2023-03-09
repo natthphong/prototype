@@ -1,22 +1,33 @@
+import "./header.css";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
-import './header.css'
-import React from 'react'
-
-export default function Header() {
-  return (
-    <div className='headercl'>
+export default function Header({ rl }) {
+  const navigate = useNavigate();
+  if (rl === "rl") {
+    return (
+      <div className="headercl">
         <div className="text1">
+          <img src="./Logo.png" alt="" className="imglogo" />
+          <h1>Sport Recommend</h1>
+        </div>
+      </div>
+    );
+  } else {
+    return (
+      <div className="headercl">
+        <div className="text1 cur" onClick={(e)=>{navigate("/Home")}}>
+          <img src="./Logo.png" alt="" className="imglogo" />
+          <h1>Sport Recommend</h1>
+        </div>
 
-        <img src="./Logo.png" alt="" className='imglogo'/>
-        <h1>Sport Recommend</h1>
-        </div>
-        
         <div className="text2">
-            <a href="">FAQ |</a>
-            <a href="">Blog |</a>
-            <a href="">About |</a>
-            <a href="">Contact |</a>
+          <a href="#faq">FAQ |</a>
+          <a href="#about">About |</a>
+          <a href="#contract">Contact |</a>
+          <a href="https://fitjunctions.com/blog/">Blog |</a>
         </div>
-    </div>
-  )
+      </div>
+    );
+  }
 }

@@ -1,11 +1,10 @@
-import React, {  useContext, useState } from "react";
+import React, { useState } from "react";
 import "./login.css";
-import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 
+import { Box, Button, Container, TextField, Typography } from "@mui/material";
 
-import { Box, Button, Container, InputLabel, TextField, Typography } from "@mui/material";
-import { UserContext } from "../context/registerContext";
 import Header from "../component/Header/Header";
 export default function Login() {
   const [User, setUser] = useState({
@@ -16,34 +15,30 @@ export default function Login() {
   //const {Users,dispatch} =useContext(UserContext);
   //console.log(Users);
 
-
   const haddleUser = (e) => {
     setUser({ ...User, [e.target.id]: e.target.value });
   };
   const navigate = useNavigate();
   const clickRegister = async (e) => {
     e.preventDefault();
-  
-      if(User.username ==="test123" && User.password ==="123456"){
-        navigate("/home");
-      }else{
-          alert("error");
-      }
-    
-   
+
+    toast.success("Login Success!");
+    setTimeout(function () {
+      navigate("/home");
+    }, 1500);
   };
 
   return (
     <div className="lcon">
-          <Header/>   
-<div className="lcontainner">
-
-        <img src="./profile.png" className="imgproflie" />
+      <Toaster  position="top-center" reverseOrder={false} />
+      <Header rl={"rl"} />
+      <div className="lcontainner">
+        <img src="./profile.png" className="imgproflie" alt="" />
         <Container maxWidth="sm">
           <form onSubmit={clickRegister}>
             <Box sx={{ my: 3 }}>
               <Typography color="textPrimary" variant="h4">
-              Login
+                Login
               </Typography>
             </Box>
             <Box
@@ -53,6 +48,7 @@ export default function Login() {
               }}
             ></Box>
             <TextField
+              required
               fullWidth
               margin="normal"
               type="text"
@@ -60,7 +56,6 @@ export default function Login() {
               id="username"
               onChange={haddleUser}
               placeholder="username"
-              required
             />
             <TextField
               fullWidth
@@ -79,7 +74,6 @@ export default function Login() {
                 size="large"
                 type="submit"
                 variant="contained"
-                onClick={clickRegister}
               >
                 Sign In Now
               </Button>
@@ -99,7 +93,7 @@ export default function Login() {
             </Typography>
           </form>
         </Container>
-        </div>
+      </div>
     </div>
   );
 }

@@ -1,52 +1,89 @@
 import { React, useState } from "react";
+import CheckIcon from '@mui/icons-material/Check';
 import "./bodyRe.css";
 import { format } from "date-fns";
 import ClearIcon from "@mui/icons-material/Clear";
 import DateRangeIcon from "@mui/icons-material/DateRange";
+import Tabs from "../tab/Tabs";
+import Detail from "../detail/Detail";
+import { useNavigate } from "react-router-dom";
+import Deresu from "../detailresult/Deresu";
+import toast, { Toaster } from 'react-hot-toast';
 export default function BodyResult() {
   const start = format(new Date(), "MM/dd/yyyy");
   const [openone, setopenone] = useState(false);
   const [opentwo, setopentwo] = useState(false);
+  const navigate = useNavigate();
+    const [res, setres] = useState(true)
+  const [check, setcheck] = useState(false)
   return (
     <div className="containerBody">
       {openone && (
         <div className="stateform1">
-          <div className="iconsetting">
-            <ClearIcon
-              className="iconclear1"
-              size="large"
-              onClick={(e) => {
-                setopenone(false);
-              }}
-            />
-          </div>
-          <div className="boxclass1">
-            <h2>Day 1</h2>
-            <div className="row">
-              <label htmlFor="">{`วันที่ออก ${start}`}</label>
-              <DateRangeIcon></DateRangeIcon>
+          <div className="top">
+            <div className="iconsetting">
+              <ClearIcon
+                className="iconclear1"
+                size="large"
+                onClick={(e) => {
+                  setopenone(false);
+                  setres(true);
+                }}
+              />
             </div>
           </div>
-          <div className="contanerboxcalss1">
-            <div className="textBox">
-              <div className="rowitem">
-                <div className="itemrow1">ยืดกล้ามเนื้อก่อนออก</div>
-                <div className="itemrow2">จำนวนการออก</div>
-                <div className="itemrow2">ยืดกล้ามเนื้อหลังออก</div>
+        {res&&<>
+          <div className="boxclass1">
+              <div className="row"> {check&&<CheckIcon className="iconcheck"></CheckIcon>}<h2>Day 1</h2></div>
+              <div className="row">
+                <label htmlFor="">{`วันที่ออก ${start}`}</label>
+                <DateRangeIcon></DateRangeIcon>
               </div>
             </div>
-          </div>
+
+            <Tabs />
 
           <div className="btnsetting">
             <button
               className="btnok2"
               onClick={(e) => {
-                setopenone(false);
+                if(!check) toast.success('วันนี้คุณทำมันสำเร็จแล้ว!')
+                setcheck(true);
               }}
             >
               ทำสำเร็จ
             </button>
+            <button
+              className="btnok2"
+              onClick={(e) => {
+                if(!check){
+                  toast.error("คุณยังไม่เคยออกกำลังกาย")
+                }else{
+                  setres(false);
+                }
+               
+              }}
+            >
+              ผลลัพธ์
+            </button>
+          
           </div>
+          </>}
+
+          {!res&&<>
+          <div className="boxclass1">
+          <Deresu/>
+
+          <button
+              className="btnok2"
+              onClick={(e) => {
+                navigate("/Home");
+              }}
+            >
+              เริ่มวิเคราะห์การออกกำลังกายใหม่
+            </button>
+            </div>
+          </>}
         </div>
       )}
       {opentwo && (
@@ -64,23 +101,18 @@ export default function BodyResult() {
             <h2>รายระเอียดของการเต้นแอโรบิค</h2>
           </div>
           <div className="contanerboxcalss1">
-           
+              <Detail/>
           </div>
 
-          <div className="btnsetting">
-            <button
-              className="btnok2"
-              onClick={(e) => {
-                setopenone(false);
-              }}
-            >
-              ทำสำเร็จ
-            </button>
-          </div>
+         
         </div>
       )}
 
       <div className="bodyincon">
+      <Toaster
+  position="top-center"
+  reverseOrder={false}
+/>
         <div className="left">
           <h1>ผลลัพธ์การวิเคราะห์ คือ การเต้นแอโรบิค</h1>
 
@@ -113,7 +145,7 @@ export default function BodyResult() {
           </div>
         </div>
         <div className="right">
-          <img src="./dance.png" alt="" />
+          <img src="./dance.png"  alt="" />
         </div>
       </div>
     </div>
